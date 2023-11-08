@@ -20,6 +20,7 @@ import { AuthChecker } from "@shm/components/common/AuthChecker";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const router = useRouter();
+
   const [popup, setPopup] = useState(false);
   const isInSigninRoute = router.pathname.startsWith("/auth/signin");
 
@@ -41,7 +42,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
               {/* common header  */}
               {/* <Navbar mode={router.pathname === "/explore/[id]" ? "light" : "dark"} /> */}
               {/* IMP NOTE !!!! Hero.tsx and ResponsiveHero.tx  Nav Bar is Moved there as it was not rendering with page click on this page for the validation on auth to work */}
-              <DefaultSeo {...defaultSEOValues} />
+              {/* <DefaultSeo {...defaultSEOValues} /> */}
 
               {/* content */}
               <Component {...pageProps} />

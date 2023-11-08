@@ -16,9 +16,11 @@ export const fetchNewList = () =>
     .then(({ data }) =>
       data.map((item: any) => ({
         title: item.title,
-        imageURL: item.image?.[0].thumbnails?.large.url,
+        imageURL: item.image?.[0]?.url,
+        imageSubURL: item.image?.[0].thumbnails?.large.url,
         siteName: item.siteName,
         newsURL: item.newsURL,
+        colID: item.colID,
       }))
     );
 
@@ -39,11 +41,14 @@ export const getSHMNewsArticles = (): Promise<NewsItem[]> => {
             const image: any = record.get("Image");
             const isPosted: any = record.get("isPosted");
             const newsURL = record.get("News URL");
+            const colID = record.get("colID");
             if (isPosted) {
               data.push({
                 title,
                 siteName: SiteName,
-                imageURL: image?.[0]?.thumbnails?.large?.url,
+                imageMAIN: image?.[0]?.thumbnails?.large?.url,
+                imageURL: image?.[0]?.url,
+                colID: colID,
                 newsURL,
               });
             }
@@ -126,16 +131,18 @@ export const getSHMProjects = (): Promise<{
             try {
               // extract row details
               const projectId = record.getId();
-              const projectName = record.get("Project Name") as string;
-              const projectDescription = record.get("Project Description") as string;
-              const projectCategory = record.get("Project Category") as string;
-              const projectLogo: any = record.get("Project Logo") as string[];
-              const projectScreenshots = record.get("Project Screenshots") as Screenshot[];
-              const projectWebsiteURL = record.get("Project Website URL") as string;
+              const projectName = record.get("Organization") as string;
+              const projectDescription = record.get("About Organization") as string;
+              const projectCategory = record.get("Product Category") as string;
+              const shardeumNetwork = record.get("Shardeum Network") as string;
+              const projectStatus = record.get("Live on Shardeum") as string;
+              const projectLogo: any = record.get("Organization Logo") as string[];
+              const projectScreenshots = record.get("Product Screenshots") as Screenshot[];
+              const projectWebsiteURL = record.get("Product Website URL") as string;
               const projectDateCreated = record.get("Created") as string;
               const projectUpvotes = (record.get("Upvote Users") as string[])?.length ?? 0;
               // const pointOfContactEmailID = record.get("Your Point of Contact's Email id");
-              const projectGithubURL = (record.get("Project Github URL") as string) || "";
+              const projectGithubURL = "";
               const status = (record.get("Status") as string) || "pending";
 
               if (projectName) {
@@ -144,6 +151,8 @@ export const getSHMProjects = (): Promise<{
                   name: projectName,
                   description: projectDescription,
                   category: projectCategory || "Others",
+                  shardeumNetwork: shardeumNetwork || "",
+                  projectStatus: projectStatus || "",
                   logo: (projectLogo && projectLogo[0]?.url) || "/Shardeum.png",
                   screenShots: projectScreenshots,
                   website: projectWebsiteURL,
@@ -151,19 +160,28 @@ export const getSHMProjects = (): Promise<{
                   numUpvotes: projectUpvotes,
                   githubUrl: projectGithubURL,
                   twiterUrl: "",
-                  status: status,
+                  status: status || "pending",
                 });
-
-                categoryCount[projectCategory] = categoryCount[projectCategory]
-                  ? categoryCount[projectCategory] + 1
-                  : 1;
-                categoryCount["All"] = categoryCount["All"] ? categoryCount["All"] + 1 : 1;
+                // Catagory
+                if (status === "accepted") {
+                  categoryCount[projectCategory] = categoryCount[projectCategory]
+                    ? categoryCount[projectCategory] + 1
+                    : 1;
+                  // status
+                  categoryCount[projectStatus] = categoryCount[projectStatus]
+                    ? categoryCount[projectStatus] + 1
+                    : 1;
+                  // Network
+                  categoryCount[shardeumNetwork] = categoryCount[shardeumNetwork]
+                    ? categoryCount[shardeumNetwork] + 1
+                    : 1;
+                  categoryCount["All"] = categoryCount["All"] ? categoryCount["All"] + 1 : 1;
+                }
               }
             } catch (err) {
               console.log(err);
             }
           });
-
           fetchNextPage();
         },
         function done(err) {
@@ -378,22 +396,27 @@ export const getProjectById = async (
         .find(projectRecordId)
         .then((record) => {
           const projectId = record.getId();
-          const projectName = record.get("Project Name") as string;
-          const projectDescription = record.get("Project Description") as string;
-          const projectCategory = record.get("Project Category") as string;
-          const projectLogo: any = record.get("Project Logo") as string[];
-          const projectScreenshots = record.get("Project Screenshots") as Screenshot[];
-          const projectWebsiteURL = record.get("Project Website URL") as string;
+          const projectName = record.get("Organization") as string;
+          const projectDescription = record.get("About Organization") as string;
+          const projectCategory = record.get("Product Category") as string;
+          const shardeumNetwork = record.get("Shardeum Network") as string;
+          const projectStatus = record.get("Live on Shardeum") as string;
+          const projectLogo: any = record.get("Organization Logo") as string[];
+          const projectScreenshots = record.get("Product Screenshots") as Screenshot[];
+          const projectWebsiteURL = record.get("Product Website URL") as string;
           const projectDateCreated = record.get("Created") as string;
           const projectUpvotes = (record.get("Upvote Users") as string[])?.length ?? 0;
-          const projectGithub = (record.get("Project Github URL") as string) || "";
-          const projectTwiterUrl = (record.get("Project Twitter URL") as string) || "";
+          const projectGithub = "";
+          const projectTwiterUrl = (record.get("Product Twitter URL") as string) || "";
           const status = (record.get("Status") as string) || "pending";
+
           const project: Project = {
             id: projectId,
             name: projectName,
             description: projectDescription,
             category: projectCategory || "Others",
+            shardeumNetwork: shardeumNetwork || "",
+            projectStatus: projectStatus || "",
             logo: (projectLogo && projectLogo[0]?.url) || "/Shardeum.png",
             screenShots: projectScreenshots || [],
             website: projectWebsiteURL,

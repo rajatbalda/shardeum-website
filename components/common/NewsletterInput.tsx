@@ -22,13 +22,26 @@ function NewsletterInput({ type }: Props) {
         <Box w="full" h="full" mb={{ base: "4", md: "0" }} mr={{ md: "4" }}>
           <Input
             placeholder={commonTranslation("your-email")}
+            type="email"
+            name="email"
+            onChange={handleOnChange}
+            value={value}
+            fontSize={{ base: "sm", md: "base" }}
+            backgroundColor={"grey"}
+            w="full"
+          />
+          {/* <Input
+            placeholder={commonTranslation("your-email")}
+            // placeholder={""}
+            backgroundColor={"grey"}
             w="full"
             h="56px"
             onChange={handleOnChange}
             type="email"
             fontSize={{ base: "sm", md: "base" }}
             value={value}
-          />
+            className="newsLetterInput"
+          /> */}
         </Box>
         <Button
           variant="primary"
@@ -38,8 +51,9 @@ function NewsletterInput({ type }: Props) {
           border="0"
           fontSize="base"
           w={{ base: "full", md: "auto" }}
-          borderColor="transparent"
+          borderColor="solid"
           isLoading={status === "loading"}
+          backgroundColor={"#2031E6"}
           onClick={() => handleSubmit([type])}
           rightIcon={<IconRightArrow />}
         >

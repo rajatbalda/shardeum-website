@@ -15,6 +15,8 @@ export type ProjectCardProps = {
   projectId: string;
   onUpvoteProject: () => void;
   upvoteCount: number;
+  shardeumNetwork?: any;
+  projectStatus?: any;
 };
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -26,8 +28,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   onUpvoteProject,
   upvoteCount = 0,
   projectId = "",
+  shardeumNetwork,
+  projectStatus,
 }) => {
   const numProjectsPerPage: number | undefined = useBreakpointValue({
+    // lg: 160,
     lg: 160,
     base: 100,
   });
@@ -35,6 +40,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <LinkBox
       w={{ lg: "32.5%", sm: "20.375rem" }}
+      // w={{ lg: "23.5%", sm: "20.375rem" }}
       maxW={{ lg: "32.5%", sm: "20.375rem" }}
       h={{ lg: "28rem", base: "27rem" }}
       minH={{ lg: "28rem", base: "27rem" }}
@@ -51,7 +57,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         fontSize={{ base: "md", sm: "md", lg: "lg" }}
         fontWeight={"bold"}
       >
-        <NextLink href={`/ecosystem/${title.replace(/ /g, "")}`} passHref>
+        <NextLink href={`/ecosystem/${title.replace(/ /g, "")}`} passHref legacyBehavior>
           <LinkOverlay target="_blank">{title}</LinkOverlay>
         </NextLink>
       </Text>
@@ -80,8 +86,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           color="brand.grey-80"
         >
           {description.slice(0, numProjectsPerPage)}...
-          <Text cursor="pointer" as="span" color="#2031E6">
-            read more
+          <br />
+          <br />
+          <Text cursor="pointer" as="span">
+            <b>Read more</b>
           </Text>
         </Text>
       ) : (
@@ -95,7 +103,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </Text>
       )}
 
-      <CategoryBadge category={category} />
+      <CategoryBadge
+        category={category}
+        shardeumNetwork={shardeumNetwork}
+        projectStatus={projectStatus}
+      />
     </LinkBox>
   );
 };

@@ -9,6 +9,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -19,12 +20,25 @@ import {
   COMMUNITY_URL,
   CLAIM_100_SHM_LINK,
   EXPLORE_EVENTS,
-  SHARDEUM_LIBERTY_ALPHANET_URL,
+  COMMUNITY_UPDATE,
+  COMMUNITY_REWARDS,
+  SHM_CALCULATOR,
   DOCS_URL,
   FAQ_URL,
   EXPLORER_LIBERTY_URL,
   SUPERSHARDIAN_URL,
   EVENTBRITE,
+  BETANET_URL,
+  ECOSYSTEM_URL,
+  CAREERS_URL,
+  EXPLORER_NEW_LIBERTY_URL,
+  REPORT_BUGS,
+  DEV_URL,
+  SHARDEUM_UPDATES_URL,
+  PROOF_OF_COMMUNITY_OVERVIEW,
+  PROOF_OF_COMMUNITY_PROGRAM,
+  PROOF_OF_COMMUNITY_BACKPACKING_INDIA,
+  PROOF_OF_COMMUNITY_BACKPACKING_UPDATES,
 } from "../../constants/links";
 import { ArrowDownIcon, ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Logo from "components/common/Logo";
@@ -38,49 +52,52 @@ import MenuComponent from "./MenuComponent";
 
 const linksArr = [
   {
-    title: "learn",
-    link: "",
-    newPage: false,
-    highlight: false,
-    submenu: [
-      {
-        title: "litepaper",
-        link: LITEPAPER_URL,
-        newPage: true,
-      },
-      {
-        title: "faq",
-        link: FAQ_URL,
-        newPage: true,
-      },
-      {
-        title: "blog",
-        link: BLOG_URL,
-        newPage: true,
-      },
-    ],
-  },
-  {
     title: "developers",
     link: "",
     newPage: false,
     highlight: false,
+    submenuLevel: 1,
     submenu: [
+      // {
+      //   title: "alphanet",
+      //   link: SHARDEUM_LIBERTY_ALPHANET_URL,
+      //   newPage: false,
+      // },
       {
-        title: "alphanet",
-        link: SHARDEUM_LIBERTY_ALPHANET_URL,
+        title: "Developer Home",
+        link: DEV_URL,
         newPage: false,
+        highlight: false,
+      },
+      {
+        title: "Betanet Sphinx",
+        link: BETANET_URL,
+        newPage: false,
+        highlight: false,
+      },
+      {
+        title: "Dapps Ecosystem",
+        link: ECOSYSTEM_URL,
+        newPage: false,
+        highlight: false,
       },
       {
         title: "docs",
         link: DOCS_URL,
         newPage: true,
+        highlight: false,
       },
       {
-        title: "explore",
-        link: EXPLORER_LIBERTY_URL,
+        title: "Explorer",
+        link: EXPLORER_NEW_LIBERTY_URL,
         newPage: true,
+        highlight: false,
       },
+      // {
+      //   title: "Report Bugs",
+      //   link: REPORT_BUGS,
+      //   newPage: true,
+      // },
     ],
   },
   {
@@ -88,30 +105,119 @@ const linksArr = [
     link: "",
     newPage: false,
     highlight: false,
+    submenuLevel: 1,
     submenu: [
       {
         title: "community_ecosystem",
         link: COMMUNITY_URL,
         newPage: false,
+        highlight: false,
       },
       {
-        title: "events",
+        title: "shardeum_events",
         link: EXPLORE_EVENTS,
         newPage: false,
+        highlight: false,
       },
       {
-        title: "supershardian",
-        link: SUPERSHARDIAN_URL,
+        title: "shardeum_updates",
+        link: SHARDEUM_UPDATES_URL,
+        newPage: false,
+        highlight: false,
+      },
+      {
+        title: "community_rewards",
+        link: COMMUNITY_REWARDS,
         newPage: true,
+        highlight: false,
+      },
+      {
+        title: "proof-of-community",
+        link: "",
+        newPage: false,
+        highlight: false,
+        submenuLevel: 2,
+        submenu: [
+          {
+            title: "proof-of-community-overview",
+            link: PROOF_OF_COMMUNITY_OVERVIEW,
+            newPage: true,
+            highlight: false,
+          },
+          {
+            title: "proof-of-community-program",
+            link: PROOF_OF_COMMUNITY_PROGRAM,
+            newPage: true,
+            highlight: false,
+          },
+          {
+            title: "proof-of-community-backpacking-india",
+            link: PROOF_OF_COMMUNITY_BACKPACKING_INDIA,
+            newPage: true,
+            highlight: false,
+          },
+          {
+            title: "proof-of-community-backpacking-updates",
+            link: PROOF_OF_COMMUNITY_BACKPACKING_UPDATES,
+            newPage: true,
+            highlight: false,
+          },
+        ],
+      },
+      // {
+      //   title: "careers",
+      //   link: CAREERS_URL,
+      //   newPage: true,
+      //   highlight: false,
+      // },
+    ],
+  },
+  {
+    title: "learn",
+    link: "",
+    newPage: false,
+    highlight: false,
+    submenuLevel: 1,
+    submenu: [
+      {
+        title: "SHM_Tokenomics",
+        link: SHM_CALCULATOR,
+        newPage: true,
+        highlight: false,
+      },
+      {
+        title: "litepaper",
+        link: LITEPAPER_URL,
+        newPage: true,
+        highlight: false,
+      },
+      {
+        title: "faq",
+        link: FAQ_URL,
+        newPage: true,
+        highlight: false,
+      },
+      {
+        title: "blog",
+        link: BLOG_URL,
+        newPage: true,
+        highlight: false,
       },
     ],
   },
+  { title: "Mainnet Roadmap", link: "https://shardeum.org/roadmap/mainnet/" },
   {
     title: "claim-100-shm-cta",
     link: CLAIM_100_SHM_LINK,
     newPage: true,
     highlight: true,
   },
+  // {
+  //   title: "Report Bugs on Sphinx",
+  //   link: REPORT_BUGS,
+  //   newPage: true,
+  //   highlight: false,
+  // },
 ];
 
 export type NavbarProps = {
@@ -142,12 +248,10 @@ const Navbar: FC<NavbarProps> = ({ mode = "dark" }) => {
     const current_date = formatDate(new Date());
 
     if (current_date.getTime() > specific_date.getTime()) {
-      console.log("current_date date is grater than specific_date");
       setHideNoti(true);
     } else if (current_date.getTime() === specific_date.getTime()) {
       setHideNoti(false);
     } else {
-      console.log("current_date date is lower than specific_date");
       setHideNoti(false);
     }
 
@@ -190,14 +294,20 @@ const Navbar: FC<NavbarProps> = ({ mode = "dark" }) => {
       <div
         className="navNotificationShow"
         style={{
-          background: "linear-gradient(90deg, #606EFF -5.59%, #EC5B29 103.41%);",
+          // background: "linear-gradient(90deg, #606EFF -5.59%, #EC5B29 103.41%)",
           textAlign: "center",
           color: "white",
           padding: "5px",
         }}
       >
-        <a href={"https://lu.ma/shardeum-q4-update"} target="_blank" rel="noreferrer">
-          <b> Register now for Shardeum Q4 Update : Intro to Betanet </b>
+        <a
+          // href={"https://shardeum.org/blog/shardeum-open-source/"}
+          href={"https://shm.gg/shm-oct-2023-updates"}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <b>Join us on Nov 8 for our monthly update & whitepaper release. Register now!</b>
+          {/* <b> Explore and Contribute to the Open Source Shardeum Codebase </b> */}
         </a>
       </div>
     );
@@ -221,14 +331,15 @@ const Navbar: FC<NavbarProps> = ({ mode = "dark" }) => {
           color={mode === "light" ? "brand.grey-90" : "text"}
         >
           <Container maxW="container.xl" py="5" px={{ base: "6", xl: "0" }}>
-            <Flex justify="space-between" align={"center"}>
+            <Flex justify="" align={"center"}>
               <Box>
-                <NextLink href="/" passHref>
+                <NextLink href="/" passHref legacyBehavior>
                   <Link>
                     <Logo />
                   </Link>
                 </NextLink>
               </Box>
+              <Spacer />
               <Stack
                 direction={["column", "row"]}
                 spacing={"1rem"}
@@ -236,42 +347,52 @@ const Navbar: FC<NavbarProps> = ({ mode = "dark" }) => {
                 display={{ base: "none", lg: "flex" }}
               >
                 {/* All the links laid out horizontally */}
-                {linksArr?.map((link, index) => (
-                  <NextLink key={link.title} href={link.link} passHref>
-                    <Link
-                      variant="navlink"
-                      rel="noopener noreferrer"
-                      target={link.newPage ? "_blank" : "_self"}
-                      fontWeight={link.highlight ? "bold" : "normal"}
-                    >
-                      {typeof link.submenu !== "undefined" ? (
-                        <MenuComponent link={link} />
-                      ) : (
-                        commonTranslation(link.title)
-                      )}
-                    </Link>
-                  </NextLink>
-                ))}
+                {linksArr?.map((link, index) =>
+                  typeof link.submenu !== "undefined" ? (
+                    <MenuComponent link={link} />
+                  ) : (
+                    <NextLink key={link.title} href={link.link} passHref legacyBehavior>
+                      <Link
+                        variant="navlink"
+                        rel="noopener noreferrer"
+                        target={link.newPage ? "_blank" : "_self"}
+                        fontWeight={link.highlight ? "bold" : "normal"}
+                        fontSize={"16px"}
+                      >
+                        {commonTranslation(link.title)}
+                      </Link>
+                    </NextLink>
+                  )
+                )}
 
-                {isauthVisible === true ? (
-                  <Menu>
-                    <MenuButton>
-                      <Avatar size="sm" src={session?.user?.image || "/avatar.png"} />
-                    </MenuButton>
+                {/* {isauthVisible === true ? (
+                <Menu>
+                  <MenuButton>
+                    <Avatar size="sm" src={session?.user?.image || "/avatar.png"} />
+                  </MenuButton>
 
-                    <MenuList>
-                      {session ? (
-                        <MenuItem onClick={() => signOut()}>Signout</MenuItem>
-                      ) : (
-                        <MenuItem onClick={() => setPopup(true)}>Signin</MenuItem>
-                      )}
-                    </MenuList>
-                  </Menu>
-                ) : null}
+                  <MenuList>
+                    {session ? (
+                      <MenuItem onClick={() => signOut()}>Signout</MenuItem>
+                    ) : (
+                      <MenuItem onClick={() => setPopup(true)}>Signin</MenuItem>
+                    )}
+                  </MenuList>
+                </Menu>
+              ) : null} */}
 
                 {/* <Link variant="navlink">Language</Link> */}
               </Stack>
               {/* Will only show on mobile and tablets */}
+              <Box>
+                {/* <NextLink href="/" passHref>
+                <Link>
+                  <Logo />
+                </Link>
+              </NextLink> */}
+              </Box>
+            </Flex>
+            <Flex justify="end">
               <MobileDrawer links={linksArr} />
             </Flex>
           </Container>

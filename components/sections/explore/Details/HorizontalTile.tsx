@@ -29,10 +29,10 @@ export const HorizontalTile: FC<HorizontalTileProps> = ({
 }) => {
   const [userUpvotedState, setUserUpvotedState] = useState(userUpvoted);
   const [upvoteCount, setUpvoteCount] = useState(project.numUpvotes);
+  const [readmore, setReadmore] = useState(false);
 
   // to open signin window
   const { setPopup } = useContext(SigninContext);
-
   // to manage state of projects(update upvote count) and upvotedProjectsMap
   const handleUpvoteProjectState = (upvoted: boolean) => {
     setUpvoteCount((curCount) => {
@@ -47,8 +47,6 @@ export const HorizontalTile: FC<HorizontalTileProps> = ({
 
   // this will make calls to the API, will call handleUpvoteProjectState (optimistic), and will revert by calling it again with the opposite value to revert state
   const onUpvoteProject = () => {
-    // window.alert("Disabled for the momment");
-    // uncomment code to enable upvote functionality and comment/ remove above line
     // if user is not signed in, take them to sign in page
     if (!session) {
       // signIn("twitter");
@@ -70,6 +68,10 @@ export const HorizontalTile: FC<HorizontalTileProps> = ({
         // undo the update from frontend side if the API call fails
         handleUpvoteProjectState(!upvoted);
       });
+  };
+
+  const readMoreChange = (value: boolean) => {
+    setReadmore(value);
   };
 
   return (
@@ -141,11 +143,34 @@ export const HorizontalTile: FC<HorizontalTileProps> = ({
             lineHeight={{ base: "7", md: "8" }}
             fontWeight="normal"
             color="brand.grey-90"
-            fontSize="xl"
+            fontSize={["sm", "md", "lg", "xl"]}
           >
-            {project.description}
+            {readmore === true ? (
+              <div>
+                {project.description}
+                <br />
+                <br />
+                <a href="#" onClick={() => readMoreChange(false)}>
+                  <b>Shrink</b>
+                </a>
+              </div>
+            ) : (
+              <div>
+                {project.description.substring(0, 160)}
+                <br />
+                <br />
+                <a href="#" onClick={() => readMoreChange(true)}>
+                  <b>Read More</b>
+                </a>
+              </div>
+            )}
+            <br />
+            <CategoryBadge
+              category={project.category}
+              shardeumNetwork={project.shardeumNetwork}
+              projectStatus={project.projectStatus}
+            />
           </Text>
-          <CategoryBadge category={project.category} />
         </GridItem>
         <GridItem
           colStart={[1, 2, 2, 3]}
@@ -174,6 +199,8 @@ export const HorizontalTile: FC<HorizontalTileProps> = ({
                 {getNumberWithSuffix(upvoteCount)}
               </Text>
             </HorizontalTileButton> */}
+
+            {/* Share */}
             <HorizontalTileButton onClick={onOpen}>
               <ShareIcon />
               &nbsp;&nbsp; Share

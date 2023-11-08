@@ -1,4 +1,15 @@
-import { Show, Box, Container, Flex, Grid, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+  Show,
+  Box,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  VStack,
+  Button,
+  Spacer,
+} from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -41,7 +52,17 @@ const roadmapList = [
     sections: [
       {
         description: "phase-3-desc",
-        taskList: ["phase-3-task-list-1", "phase-3-task-list-2", "phase-3-task-list-3"],
+        taskList: [
+          "phase-3-task-list-1",
+          "phase-3-task-list-2",
+          "phase-3-task-list-3",
+          // "phase-3-task-list-4",
+          // "phase-3-task-list-5",
+          // "phase-3-task-list-6",
+          // "phase-3-task-list-7",
+          // "phase-3-task-list-8",
+          // "phase-3-task-list-9",
+        ],
       },
       {
         description: "phase-3-secondary-desc",
@@ -78,10 +99,12 @@ const roadmapList = [
       {
         description: "phase-5-desc",
         taskList: [
-          "phase-5-task-list-1",
-          "phase-5-task-list-2",
-          "phase-5-task-list-3",
-          "phase-5-task-list-4",
+          // "phase-5-task-list-1",
+          // "phase-5-task-list-2",
+          // "phase-5-task-list-3",
+          // "phase-5-task-list-4",
+          "phase-5-task-list-6",
+          "phase-5-task-list-5",
         ],
         launchItems: [],
       },
@@ -97,7 +120,15 @@ const roadmapList = [
     sections: [
       {
         description: "phase-6-desc",
-        taskList: ["phase-6-task-list-1", "phase-6-task-list-2"],
+        taskList: [
+          "phase-6-task-list-1",
+          "phase-6-task-list-2",
+          "phase-6-task-list-3",
+          "phase-6-task-list-4",
+          "phase-6-task-list-5",
+          // "phase-6-task-list-6",
+          // "phase-6-task-list-7",
+        ],
         launchItems: [],
       },
       // {
@@ -106,6 +137,85 @@ const roadmapList = [
     ],
     quarterStartDate: new Date(2023, 1, 1),
     quarterEndDate: new Date(2023, 3, 31),
+  },
+  {
+    title: "phase-7-title",
+    sections: [
+      {
+        description: "phase-7-desc",
+        taskList: [
+          "phase-7-task-list-1",
+          "phase-7-task-list-2",
+          "Sphinx 1.3",
+          // "phase-7-task-list-3",
+          // "phase-7-task-list-4",
+
+          // "phase-7-task-list-6",
+          // "phase-7-task-list-7",
+          // "phase-7-task-list-8",
+          // "phase-7-task-list-9",
+        ],
+        launchItems: [],
+      },
+      {
+        // description: "phase-7-secondary-desc",
+      },
+    ],
+    quarterStartDate: new Date(2023, 4, 1),
+    quarterEndDate: new Date(2023, 6, 31),
+  },
+  {
+    title: "Q3 / Q4 2023",
+    sections: [
+      {
+        description: "Betanet Feature Completion",
+        // description: "phase-8-desc",
+        taskList: [
+          "phase-8-task-list-1",
+          "phase-8-task-list-2",
+          // "phase-8-task-list-3",
+          // "Betanet Feature Completion",
+          "Patent Filing",
+          // "phase-8-task-list-4",
+          // "phase-7-task-list-6",
+          // "phase-7-task-list-7",
+          // "phase-7-task-list-8",
+          // "phase-7-task-list-9",
+        ],
+        launchItems: [],
+      },
+      {
+        description: "phase-8-secondary-desc",
+      },
+    ],
+    quarterStartDate: new Date(2023, 7, 1),
+    quarterEndDate: new Date(2023, 9, 31),
+  },
+  {
+    title: "phase-8-title",
+    sections: [
+      {
+        description: "phase-8-desc",
+        taskList: [
+          // "phase-8-task-list-1",
+          // "phase-8-task-list-2",
+          // "phase-8-task-list-3",
+          // "Feature completion",
+          // "Patent Filing",
+          "phase-8-task-list-4",
+          // "phase-7-task-list-6",
+          // "phase-7-task-list-7",
+          // "phase-7-task-list-8",
+          // "phase-7-task-list-9",
+        ],
+        launchItems: [],
+      },
+      {
+        description: "phase-8-secondary-desc",
+      },
+    ],
+    quarterStartDate: new Date(2024, 1, 1),
+    quarterEndDate: new Date(2024, 3, 31),
   },
 ];
 
@@ -142,7 +252,7 @@ const getQuarterProgressInPercentage = (quarter: typeof roadmapList[0]) => {
   }
 };
 
-function RoadmapFull() {
+function RoadmapFull({ heading }: any) {
   const { t: pageTranslation } = useTranslation(["page-home", "common"]);
 
   return (
@@ -150,10 +260,10 @@ function RoadmapFull() {
       <Box position="absolute" zIndex={1} display={{ base: "none", lg: "block" }}>
         <Image
           src="/roadmap-bg.png"
-          width="500px"
+          width="500"
           objectFit="cover"
           alt="white paper gradient background"
-          height="800px"
+          height="800"
         />
       </Box>
       <Container
@@ -170,9 +280,13 @@ function RoadmapFull() {
             {/* <Text fontSize="sm" color="brand.orange">
               2022
             </Text> */}
-            <Heading size="2xl" color="brand.white" as="h2" alignItems="center">
-              {pageTranslation("roadmap")}
-            </Heading>
+            <h1 style={{ fontSize: "48px" }}>
+              {" "}
+              <b>{pageTranslation("roadmap")}</b>{" "}
+            </h1>
+            {/* <Heading size="2xl" color="brand.white" as={heading} alignItems="center">
+            {pageTranslation("roadmap")}
+            </Heading> */}
           </VStack>
           <VerticalTimeline lineColor="rgba(33, 33, 33, 1)">
             {roadmapList.map((item: any) => {
@@ -226,6 +340,18 @@ function RoadmapFull() {
                       );
                     })}
                   </VStack>
+                  {item.title === "phase-8-title" && (
+                    <Button
+                      as="a"
+                      variant="primary"
+                      size="lg"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={"https://shardeum.org/roadmap/mainnet/"}
+                    >
+                      Detailed Roadmap
+                    </Button>
+                  )}
                 </VerticalTimelineElement>
               );
             })}

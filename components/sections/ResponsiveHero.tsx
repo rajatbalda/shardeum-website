@@ -12,6 +12,7 @@ type HeroProps = {
   titleColor?: string;
   descColor?: string;
   breadcrumb?: any;
+  internalPage?: any;
 };
 
 const ResponsiveHero = ({
@@ -23,6 +24,7 @@ const ResponsiveHero = ({
   descColor,
   respHeroImg,
   breadcrumb,
+  internalPage,
 }: HeroProps) => {
   const router = useRouter();
   const renderIcon = (src: string) => {
@@ -51,15 +53,21 @@ const ResponsiveHero = ({
                 lineHeight={{ base: "7", md: "8" }}
                 color={descColor || "brand.grey-20"}
               >
-                <Breadcrumb color={descColor || "brand.grey-20"}>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/">{"Home"}</BreadcrumbLink>
-                  </BreadcrumbItem>
+                {breadcrumb ? (
+                  breadcrumb
+                ) : (
+                  <Breadcrumb color={descColor || "brand.grey-20"}>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">{"Home"}</BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">{"Ecosystem"}</BreadcrumbLink>
-                  </BreadcrumbItem>
-                </Breadcrumb>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/ecosystem">
+                        {"Ecosystem"} {internalPage && `/ ${internalPage.name}`}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </Breadcrumb>
+                )}
               </Text>
               <Text
                 as="h1"

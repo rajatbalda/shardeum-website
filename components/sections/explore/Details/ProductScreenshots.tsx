@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
 import { Container, Heading, Image, Box } from "@chakra-ui/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Screenshot } from "models";
 import React, { FC } from "react";
-import Carousel from "../../../../components/common/Carousel";
+import Carousel from "@shm/components/common/Carousel";
 // import { Carousel, LeftButton, RightButton } from "chakra-ui-carousel";
 // filename: "website.png"
 // height: 612
@@ -21,6 +22,9 @@ type ProductScreenshotProps = {
 export const ProductScreenshots: FC<ProductScreenshotProps> = ({
   screenShots,
 }: ProductScreenshotProps) => {
+  useEffect(() => {
+    // console.log(screenShots.length)
+  });
   return (
     <Container
       mx="auto"
@@ -32,32 +36,18 @@ export const ProductScreenshots: FC<ProductScreenshotProps> = ({
       <Heading size="2xl" mb={8} color="brand.black">
         Product Screenshots
       </Heading>
-      {/* <Box>
-        <Carousel gap={50}>
-          {screenShots?.map((item) => (
-            <Image
-              mb={8}
-              key={item.id}
-              src={item.thumbnails.full.url}
-              alt="screenshots"
-              width="100%"
-            />
-          ))}
-        </Carousel>
-        <LeftButton bgColor="red.500" customIcon={<ArrowLeftIcon />} textColor={"white.500"} />
-        <RightButton bgColor="blue.500" customIcon={<ArrowRightIcon />} />
-      </Box> */}
-      <Carousel>
-        {screenShots?.map((item) => (
-          <Box w="100%" h={"500px"}>
+      <Carousel arrowHide={screenShots.length > 1 ? false : true}>
+        {screenShots?.map((item, index) => (
+          <Box w="100%" h={"auto"} key={index}>
             <Image
               m={"auto"}
               // objectFit='cover'
+              style={{ maxHeight: "500px" }}
               key={item.id}
               src={item.thumbnails.full.url}
               alt="screenshots"
               width="auto"
-              height="100%"
+              height="auto"
             />
           </Box>
         ))}

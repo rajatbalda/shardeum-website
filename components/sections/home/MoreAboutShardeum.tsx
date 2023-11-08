@@ -13,27 +13,27 @@ const featureList = [
   {
     titleKey: "shm-feature-2-title",
     descriptionKey: "shm-feature-2-desc",
-    iconPath: "linearScale.png",
+    iconPath: "DynamicShardingAtomicComposibility.png",
   },
   {
     titleKey: "shm-feature-3-title",
     descriptionKey: "shm-feature-3-desc",
-    iconPath: "operateNode.png",
+    iconPath: "linearScale.png",
   },
   {
     titleKey: "shm-feature-4-title",
     descriptionKey: "shm-feature-4-desc",
-    iconPath: "clockIcon.png",
+    iconPath: "operateNode.png",
   },
   {
     titleKey: "shm-feature-5-title",
     descriptionKey: "shm-feature-5-desc",
-    iconPath: "securityIcon.png",
+    iconPath: "AutoscalingHighfairness.png",
   },
   {
     titleKey: "shm-feature-6-title",
     descriptionKey: "shm-feature-6-desc",
-    iconPath: "plantIcon.png",
+    iconPath: "securityIcon.png",
   },
 ];
 

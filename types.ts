@@ -5,10 +5,12 @@ export type Status = "idle" | "loading" | "error";
 export type validSources = keyof typeof sourceToListIdMap;
 
 export interface NewsItem {
+  imageMAIN: any;
   title: string;
   imageURL: string;
   newsURL: string;
   siteName: string;
+  colID: string;
 }
 
 export interface CommunityStat {

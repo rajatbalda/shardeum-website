@@ -29,13 +29,18 @@ const { twitter, facebook, reddit, linkedIn, telegram } = brandSocialIcons;
 
 export type ShareModalProps = {
   projectUrl: string;
+  project: any;
   isOpen: boolean;
   onClose: () => void;
 };
 
-export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose }) => {
+export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose, project }) => {
   const { hasCopied, onCopy } = useClipboard(projectUrl);
-
+  const TEXT =
+    " it cover only %0Athis Check out " +
+    project.name +
+    " on @shardeum 🔥 %0A%0ABuild highly scalable dapps on the worlds first EVM-based L1 which uses dynamic state sharding to increase TPS with every new node. %0A%0ALets %0A%0A" +
+    projectUrl;
   return (
     <Modal isOpen={isOpen} isCentered onClose={onClose}>
       <ModalOverlay />
@@ -53,17 +58,20 @@ export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose })
           <HStack mt={4} align="center" justify="center" columnGap={2}>
             <Flex
               as="a"
-              href={`https://twitter.com/intent/tweet?url=${projectUrl}`}
+              href={`https://twitter.com/intent/tweet?text=${projectUrl}`}
               direction="column"
               align="center"
+              target={"_blank"}
             >
               {twitter}
               <ModalSocialLinksText>Twitter</ModalSocialLinksText>
             </Flex>
             <Flex
               as="a"
-              href={`https://www.facebook.com/sharer/sharer.php?href=${projectUrl}`}
+              // href={`https://www.facebook.com/sharer/sharer.php?href=${TEXT}`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${projectUrl}`}
               direction="column"
+              target={"_blank"}
               align="center"
             >
               {facebook}
@@ -73,6 +81,7 @@ export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose })
               as="a"
               href={`https://www.reddit.com/submit?url=${projectUrl}`}
               direction="column"
+              target={"_blank"}
               align="center"
             >
               {reddit}
@@ -80,8 +89,10 @@ export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose })
             </Flex>
             <Flex
               as="a"
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${projectUrl}`}
+              // href={`https://www.linkedin.com/sharing/share-offsite/?url=${TEXT}`}
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${projectUrl}&title=${project.name}&summary=${TEXT}`}
               direction="column"
+              target={"_blank"}
               align="center"
             >
               {linkedIn}
@@ -91,6 +102,7 @@ export const ShareModal: FC<ShareModalProps> = ({ projectUrl, isOpen, onClose })
               as="a"
               href={`https://telegram.me/share/url?url=${projectUrl}`}
               direction="column"
+              target={"_blank"}
               align="center"
             >
               {telegram}

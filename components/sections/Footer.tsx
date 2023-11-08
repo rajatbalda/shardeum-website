@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Container,
@@ -40,6 +42,9 @@ import {
   LITEPAPER_URL,
   NEWSLETTER_URL,
   CLAIM_100_SHM_LINK,
+  PARTNER_SHARDEUM,
+  BRAND_ASSET,
+  NEWS_LETTER_UPDATES,
 } from "../../constants/links";
 import { useTranslation } from "next-i18next";
 import useNewsLetterForm from "../../hooks/useNewsletter";
@@ -52,15 +57,31 @@ const JoinNewsletterComp = () => {
     handleOnChange,
     handleSubmit,
   } = useNewsLetterForm();
+  const [title, setTitle] = useState("join-newsletter-title-footer");
+  const [disc, setDisc] = useState("join-newsletter-desc");
+  const [newsLetterBottom, setNewsLetterBottom] = useState(["newsletterBottom"]);
+  const [developerPage, setDeveloperPage] = useState(["developerPage"]);
+  const [newsLetterEmail, setNewsLetterEmail]: any = useState([""]);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.pathname == "/developer"
+      ? setTitle("join-newsletter-title-footer-dev")
+      : setTitle("join-newsletter-title-footer");
+
+    router.pathname == "/developer"
+      ? setDisc("join-newsletter-desc-dev")
+      : setDisc("join-newsletter-desc");
+
+    router.pathname == "/developer"
+      ? setNewsLetterEmail(developerPage)
+      : setNewsLetterEmail(newsLetterBottom);
+  }, [router.pathname]);
   const { t: pageTranslation } = useTranslation(["common"]);
 
   return (
     <VStack py="6" px="0" bgColor="#101010" w="full" alignItems="start" spacing="6">
-      <Feature
-        type="h2"
-        title={pageTranslation("join-newsletter-title-footer")}
-        description={pageTranslation("join-newsletter-desc")}
-      />
+      <Feature type="h2" title={pageTranslation(title)} description={pageTranslation(disc)} />
       <FormControl isInvalid={!!error}>
         <LightMode>
           <InputGroup>
@@ -72,7 +93,7 @@ const JoinNewsletterComp = () => {
               value={value}
             />
             <InputRightAddon
-              onClick={() => handleSubmit(["newsletterBottom"])}
+              onClick={() => handleSubmit(newsLetterEmail)}
               children={
                 <LightMode>
                   <IconButton
@@ -111,22 +132,26 @@ const socialLinks = [
 const LinksMap = {
   General: [
     { title: "home", href: "/" },
+    { title: "Mainnet Roadmap", href: "https://shardeum.org/roadmap/mainnet/", target: "_BLANK" },
     { title: "the-community", href: COMMUNITY_URL },
-    { title: "blog", href: BLOG_URL, target: "_BLANK" },
     { title: "newsletter", href: NEWSLETTER_URL },
     { title: "Careers", href: "/careers/", target: "_BLANK" },
+    { title: "OCC", href: "/occ/", target: "" },
     { title: "Privacy Policy", href: "/privacy-policy/", target: "" },
     { title: "Terms", href: "/terms/", target: "" },
   ],
   Resources: [
     { title: "litepaper", href: LITEPAPER_URL },
+    { title: "blog", href: BLOG_URL, target: "_BLANK" },
     { title: "faq", href: FAQ_URL },
     { title: "public-drive-link", href: PUBLIC_DRIVE_LINK, target: "_BLANK" },
     { title: "claim-100-shm-cta", href: CLAIM_100_SHM_LINK },
+    { title: "Newsletter Updates", href: NEWS_LETTER_UPDATES, target: "_BLANK" },
+    { title: "Brand Assets", href: BRAND_ASSET },
   ],
   Contact: [
     { title: "general-enquiries", href: GENERAL_QUERIES_LINK, target: "_BLANK" },
-    { title: "investment-queries", href: INVESTMENT_QUERY_LINK, target: "_BLANK" },
+    { title: "partner-shardeum", href: PARTNER_SHARDEUM, target: "_BLANK" },
   ],
 };
 
@@ -139,7 +164,7 @@ function Footer() {
         <SimpleGrid columns={[1, 1, 2]} gap={["8", "12"]}>
           <Flex direction="column" justifyContent="space-between">
             <Flex direction="column" justifyContent="left" alignItems="left">
-              <Link href="/" passHref>
+              <Link href="/" passHref legacyBehavior>
                 <Box as="a">
                   <Logo />
                 </Box>
@@ -172,7 +197,7 @@ function Footer() {
                   </Text>
                   <VStack spacing="3" alignItems="start">
                     {links.map((link) => (
-                      <Link href={link.href} passHref key={link.title}>
+                      <Link href={link.href} passHref key={link.title} legacyBehavior>
                         <Text
                           as="a"
                           target={link.target ? link.target : ""}

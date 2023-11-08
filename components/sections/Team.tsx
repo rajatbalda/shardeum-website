@@ -97,7 +97,7 @@ function Team() {
                   <Image
                     layout="fill"
                     objectFit="cover"
-                    src="/community-thumbnail.png"
+                    src="/community-thumbnail.jpg"
                     alt="Community Image"
                   />
                 </AspectRatio>
@@ -108,7 +108,7 @@ function Team() {
                 </Text>
                 <Flex direction="column">
                   <Text color="brand.grey-70">{commonTranslation("community-desc")}</Text>
-                  <Link href={DISCORD_URL} passHref>
+                  <Link href={DISCORD_URL} passHref legacyBehavior>
                     <Text
                       as="a"
                       color="brand.blue"

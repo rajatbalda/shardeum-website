@@ -1,5 +1,6 @@
 import { Container, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import Link from "next/link";
+import { PhoneIcon, AddIcon, WarningIcon, EmailIcon } from "@chakra-ui/icons";
 import {
   IconDiscord,
   IconExternal,
@@ -7,30 +8,84 @@ import {
   IconSeeMore,
   IconTelegram,
   IconTwitter,
+  IconReddit,
+  IconYoutube,
+  IconGitLab,
 } from "@shm/Icons";
 import {
   DISCORD_URL,
   GITHUB_URL,
+  GITLAB_URL,
   NEWSLETTER_URL,
   TELEGRAM_URL,
   TWITTER_URL,
+  REDDIT_URL,
+  YOUTUBE_URL,
 } from "../../constants/links";
 import { useTranslation } from "next-i18next";
 
 const socialLinks = [
   { Icon: IconDiscord, title: "Discord", href: DISCORD_URL, target: "_blank" },
   { Icon: IconTwitter, title: "Twitter", href: TWITTER_URL, target: "_blank" },
-  { Icon: IconGithub, title: "Github", href: GITHUB_URL, target: "_blank" },
   { Icon: IconTelegram, title: "Telegram", href: TELEGRAM_URL, target: "_blank" },
+  { Icon: IconYoutube, title: "YouTube", href: YOUTUBE_URL, target: "_blank" },
+  { Icon: IconReddit, title: "Reddit", href: REDDIT_URL, target: "_blank" },
   { Icon: IconSeeMore, title: "Newsletter", href: NEWSLETTER_URL, target: "_self" },
+  { Icon: IconGithub, title: "GitHub", href: GITHUB_URL, target: "_blank" },
+  { Icon: IconGitLab, title: "GitLab", href: GITLAB_URL, target: "_blank" },
 ];
 
 const JoinCommunity = () => {
   const { t: pageTranslation } = useTranslation(["common", "page-home"]);
   return (
     <Flex bg="brand.grey-90" as="section">
-      <Container maxW="container.xl" mx="auto" pt="16" pb="28" px={{ base: 6, xl: 0 }}>
-        <SimpleGrid columns={[1, 1, 2]} gap={["8", "12"]}>
+      <Container maxW="container.xl" py="8" px={{ base: 6, xl: "5%" }}>
+        <HStack
+          spacing="12"
+          // className=""
+          // style={{ margin: 0, display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}
+        >
+          <SimpleGrid columns={[2, 8]} gap={{ base: 12 }} rowGap={{ base: 5 }}>
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" key={link.title} rel="noreferrer">
+                <HStack
+                  className="joimCommunitySocaialLinks"
+                  style={{ margin: "0", cursor: "pointer" }}
+                >
+                  {link.title === "Newsletter" ? <EmailIcon color="white" /> : <link.Icon />}
+
+                  <Text
+                    color="brand.white"
+                    fontSize="base"
+                    fontWeight="normal"
+                    w="full"
+                    m="0"
+                    _hover={{ color: "brand.grey-40" }}
+                  >
+                    {link.title}
+                  </Text>
+                  {/* <IconExternal /> */}
+                </HStack>
+              </a>
+            ))}
+          </SimpleGrid>
+          {/* <Link href={"/ecosystem"} passHref key={"all"}>
+            <HStack style={{ margin: "0", cursor: "pointer" }}>
+              <link.Icon />
+              <Text
+                color="brand.white"
+                fontSize="base"
+                fontWeight="normal"
+                w="full"
+                _hover={{ color: "brand.grey-40" }}
+              >
+                {"View all communities"}
+              </Text>
+              <IconExternal />
+            </HStack>
+          </Link> */}
+        </HStack>
+        {/* <SimpleGrid columns={[1, 1, 2]} gap={["8", "12"]}>
           <VStack spacing="6" alignItems="start">
             <Text
               as="h2"
@@ -85,7 +140,7 @@ const JoinCommunity = () => {
               ))}
             </VStack>
           </Flex>
-        </SimpleGrid>
+        </SimpleGrid> */}
       </Container>
     </Flex>
   );

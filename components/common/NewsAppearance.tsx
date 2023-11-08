@@ -44,18 +44,21 @@ const NewsItem = ({
   imageURL,
   siteName,
   newsURL,
+  colID,
 }: {
   title: string;
   imageURL: string;
   siteName: string;
   newsURL: string;
+  colID: string;
 }) => (
-  <Link passHref href={newsURL}>
+  <Link passHref href={newsURL} legacyBehavior>
     <VStack maxW="700px" as="a" rel="noopener noreferrer" target="__blank">
       <Flex w="full" position="relative">
         {imageURL ? (
           <AspectRatio ratio={564 / 300} w="full">
-            <Image unoptimized={true} src={imageURL} alt={title} layout="fill" />
+            <img src={`/news/${colID}.png`} alt={title} />
+            {/* <Image unoptimized={false} src={imageURL} alt={title} layout="fill" /> */}
           </AspectRatio>
         ) : null}
         <Box position="absolute" bg="brand.white" px="3" py="2" bottom="0">
@@ -75,7 +78,6 @@ const NewsItem = ({
 
 const NewsAppearance = ({ sectionTitle, news }: { sectionTitle: string; news: NewsItem[] }) => {
   const slidesPerView = useBreakpointValue({ base: 1, md: 2 });
-
   return (
     <Box>
       <Swiper slidesPerView={slidesPerView} spaceBetween={20} autoplay>
@@ -95,7 +97,7 @@ const NewsAppearance = ({ sectionTitle, news }: { sectionTitle: string; news: Ne
             </HStack>
           </VStack>
         </Box>
-        {news.map((item) => (
+        {/* {news.map((item) => (
           <SwiperSlide key={item.title}>
             <NewsItem
               title={item.title}
@@ -104,7 +106,21 @@ const NewsAppearance = ({ sectionTitle, news }: { sectionTitle: string; news: Ne
               newsURL={item.newsURL}
             />
           </SwiperSlide>
-        ))}
+        ))} */}
+        {news.map((item, index) => {
+          return (
+            <SwiperSlide key={item.title}>
+              <NewsItem
+                title={item.title}
+                // imageURL={`/news/${index}.jpg`}
+                imageURL={item.imageMAIN}
+                siteName={item.siteName}
+                newsURL={item.newsURL}
+                colID={item.colID}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </Box>
   );
